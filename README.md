@@ -4,7 +4,14 @@
 浏览器之间用 WebRTC 点对点直连，**没有后端、没有信令服务器**。
 以 PWA 形式实现，可以「添加到主屏幕」，离线也能打开。
 
-线上地址：`https://<你的用户名>.github.io/rps/`
+### 👉 线上地址：<https://danweizheng.github.io/rps/>
+
+<p align="center">
+  <img src="docs/screenshot-home.png" width="24%" alt="首页" />
+  <img src="docs/screenshot-pair.png" width="24%" alt="创建房间" />
+  <img src="docs/screenshot-join.png" width="24%" alt="加入房间" />
+  <img src="docs/screenshot-game.png" width="24%" alt="对战" />
+</p>
 
 ---
 
@@ -89,7 +96,7 @@ git commit -m "update"
 git push
 ```
 
-线上地址：`https://<用户名>.github.io/<仓库名>/`，可以在
+线上地址：<https://danweizheng.github.io/rps/> ，也可以在
 **Settings → Pages** 里看到。
 
 不用配 CI、不用装依赖、不用构建：所有资源路径都写成相对的（`./`），
