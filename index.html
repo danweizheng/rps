@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>石头剪刀布 · 局域网对战</title>
+<meta name="description" content="最简版石头剪刀布局域网 P2P 对战，无需服务器，可安装到桌面。" />
+<meta name="theme-color" content="#0b0d12" />
+<meta name="color-scheme" content="dark" />
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+<link rel="apple-touch-icon" href="./icons/icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="石头剪刀布" />
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<noscript><p class="noscript">这个游戏需要开启 JavaScript。</p></noscript>
+
+<main id="app">
+
+  <!-- ══ 首页 ══ -->
+  <section class="view" data-view="home">
+    <div class="logo"><span>✊</span><span>✋</span><span>✌️</span></div>
+    <h1>石头剪刀布</h1>
+    <p class="sub">局域网 P2P 对战 · 不用服务器</p>
+    <div class="stack">
+      <button class="btn primary" data-act="host">创建房间</button>
+      <button class="btn" data-act="join">加入房间</button>
+    </div>
+    <p class="hint">
+      两台设备连同一个 Wi-Fi。用一串「连接码」让浏览器点对点直连，
+      出拳数据只在两台设备之间传输，不经过任何服务器。
+    </p>
+  </section>
+
+  <!-- ══ 房主 ══ -->
+  <section class="view" data-view="host">
+    <h2>创建房间</h2>
+    <ol class="steps">
+      <li>
+        <b>第 1 步</b>：让对方用相机扫码，或把「连接码」发给他。
+        <div class="qr" data-qr="offer"></div>
+        <textarea class="code" data-out="offer" readonly rows="3" spellcheck="false"></textarea>
+        <button class="btn small" data-act="copy" data-copy="offer">复制连接码</button>
+      </li>
+      <li>
+        <b>第 2 步</b>：把对方回给你的「回应码」贴到这里。
+        <textarea class="code" data-in="answer" rows="3" spellcheck="false" placeholder="在这里粘贴对方的回应码…"></textarea>
+        <button class="btn primary" data-act="accept-answer">开始对战</button>
+      </li>
+    </ol>
+    <p class="hint" data-note="handoff" hidden>✓ 回应码已交给原来的房间页面，这个标签页可以关掉了。</p>
+    <button class="btn ghost" data-act="home">返回</button>
+  </section>
+
+  <!-- ══ 加入者 ══ -->
+  <section class="view" data-view="join">
+    <h2>加入房间</h2>
+    <ol class="steps">
+      <li>
+        <b>第 1 步</b>：扫房主的二维码会自动填好，也可以手动粘贴「连接码」。
+        <textarea class="code" data-in="offer" rows="3" spellcheck="false" placeholder="粘贴房主的连接码…"></textarea>
+        <button class="btn primary" data-act="make-answer">生成回应码</button>
+      </li>
+      <li data-when="answered" hidden>
+        <b>第 2 步</b>：让房主扫这个二维码，或把「回应码」发回给他。
+        <div class="qr" data-qr="answer"></div>
+        <textarea class="code" data-out="answer" readonly rows="3" spellcheck="false"></textarea>
+        <button class="btn small" data-act="copy" data-copy="answer">复制回应码</button>
+        <p class="hint">正在等待房主连接…</p>
+      </li>
+    </ol>
+    <button class="btn ghost" data-act="home">返回</button>
+  </section>
+
+  <!-- ══ 对战 ══ -->
+  <section class="view" data-view="game">
+    <div class="scoreboard">
+      <div class="side"><span class="lbl">我</span><span class="num" data-score="me">0</span></div>
+      <div class="vs">VS</div>
+      <div class="side"><span class="lbl">对手</span><span class="num" data-score="them">0</span></div>
+    </div>
+
+    <div class="arena">
+      <div class="hand" data-hand="me">❔</div>
+      <div class="hand" data-hand="them">❔</div>
+    </div>
+
+    <p class="result" data-result>选一个出拳</p>
+
+    <div class="choices">
+      <button class="choice" data-pick="R"><span>✊</span><small>石头</small></button>
+      <button class="choice" data-pick="P"><span>✋</span><small>布</small></button>
+      <button class="choice" data-pick="S"><span>✌️</span><small>剪刀</small></button>
+    </div>
+
+    <div class="foot">
+      <span class="dot" data-conn data-ok="1"></span>
+      <span class="foottext" data-conntext>已连接</span>
+      <button class="btn ghost small" data-act="home">断开</button>
+    </div>
+  </section>
+
+</main>
+
+<div id="busy" class="busy" hidden>
+  <div class="spinner" aria-hidden="true"></div>
+  <p data-busy-text>处理中…</p>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<!-- 二维码库（MIT，见 vendor/qr-creator.LICENSE）：普通脚本，先于模块执行 -->
+<script src="./vendor/qr-creator.min.js"></script>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
